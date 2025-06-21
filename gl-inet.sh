@@ -526,7 +526,8 @@ while true; do
 	result=$gl_name"一键iStoreOS风格化"
 	result=$(echo "$result" | sed 's/ like iStoreOS//')
 	echo "***********************************************************************"
-	echo "*      一键安装工具箱(for gl-inet Router) v1.1 by @wukongdaily        "
+	echo "*      一键安装工具箱(for gl-inet Router)"
+	echo "*      备用脚本 by @wukongdaily        "
 	echo "**********************************************************************"
 	echo "*      当前的路由器型号: "$gl_name | sed 's/ like iStoreOS//'
 	echo
