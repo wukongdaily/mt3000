@@ -9,10 +9,6 @@ light_yellow() { echo -e "\033[93m\033[01m$1\033[0m"; }
 cyan() { echo -e "\033[38;2;0;255;255m$1\033[0m"; }
 third_party_source="https://istore.linkease.com/repo/all/nas_luci"
 
-# 设置全局命令 be
-cp -f "$0" /usr/bin/be
-chmod +x /usr/bin/be
-
 setup_base_init() {
 	#添加出处信息
 	add_author_info
@@ -231,7 +227,7 @@ do_install_argon_skin() {
 	opkg update
 	opkg install luci-lib-ipkg
 	wget -O "/tmp/luci-theme-argon.ipk" "https://mt3000.netlify.app/theme/luci-theme-argon-master_2.2.9.4_all.ipk"
-	wget -O "/tmp/luci-app-argon-config.ipk" https://mt3000.netlify.app/theme/luci-app-argon-config_0.9_all.ipk"
+	wget -O "/tmp/luci-app-argon-config.ipk" "https://mt3000.netlify.app/theme/luci-app-argon-config_0.9_all.ipk"
 	wget -O "/tmp/luci-i18n-argon-config-zh-cn.ipk" "https://mt3000.netlify.app/theme/luci-i18n-argon-config-zh-cn.ipk"
 	cd /tmp/
 	opkg install luci-theme-argon.ipk luci-app-argon-config.ipk luci-i18n-argon-config-zh-cn.ipk
