@@ -367,6 +367,8 @@ do_install_filetransfer() {
 do_install_depends_ipk() {
 	wget -O "/tmp/luci-lua-runtime_all.ipk" "https://mt3000.netlify.app/theme/luci-lua-runtime_all.ipk"
 	wget -O "/tmp/libopenssl3.ipk" "https://mt3000.netlify.app/theme/libopenssl3.ipk"
+	wget -O "/tmp/luci-compat.ipk" "https://mt3000.netlify.app/theme/luci-compat.ipk"
+	opkg install "/tmp/luci-compat.ipk"
 	opkg install "/tmp/luci-lua-runtime_all.ipk"
 	opkg install "/tmp/libopenssl3.ipk"
 }
