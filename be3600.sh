@@ -8,7 +8,7 @@ light_magenta() { echo -e "\033[95m\033[01m$1\033[0m"; }
 light_yellow() { echo -e "\033[93m\033[01m$1\033[0m"; }
 cyan() { echo -e "\033[38;2;0;255;255m$1\033[0m"; }
 third_party_source="https://istore.linkease.com/repo/all/nas_luci"
-
+HTTP_HOST="https://mt3000.netlify.app"
 setup_base_init() {
 	#添加出处信息
 	add_author_info
@@ -60,11 +60,11 @@ do_istore() {
 	opkg install ./*.ipk
 
 	#覆盖 bin/is-opkg
-	wget -O /bin/is-opkg https://mt3000.netlify.app/64bit/is-opkg.sh
+	wget -O /bin/is-opkg $HTTP_HOST/64bit/is-opkg.sh
 	chmod +x /bin/is-opkg
 
 	#添加istore软件源
-	wget -O /etc/opkg/customfeeds.conf https://mt3000.netlify.app/64bit/customfeeds.conf
+	wget -O /etc/opkg/customfeeds.conf $HTTP_HOST/64bit/customfeeds.conf
 
 	#调整a53架构优先级
 	add_arch_64bit
@@ -188,7 +188,7 @@ add_dhcp_domain() {
 add_author_info() {
 	uci set system.@system[0].description='wukongdaily'
 	uci set system.@system[0].notes='文档说明:
-    https://tvhelper.cpolar.top/'
+    https://tvhelper.cpolar.cn/'
 	uci commit system
 }
 
@@ -207,13 +207,13 @@ get_router_hostname() {
 do_install_filetransfer() {
 	mkdir -p /tmp/luci-app-filetransfer/
 	cd /tmp/luci-app-filetransfer/
-	wget -O luci-app-filetransfer_all.ipk "https://mt3000.netlify.app/luci-app-filetransfer/luci-app-filetransfer_all.ipk"
-	wget -O luci-lib-fs_1.0-14_all.ipk "https://mt3000.netlify.app/luci-app-filetransfer/luci-lib-fs_1.0-14_all.ipk"
+	wget -O luci-app-filetransfer_all.ipk "$HTTP_HOST/luci-app-filetransfer/luci-app-filetransfer_all.ipk"
+	wget -O luci-lib-fs_1.0-14_all.ipk "$HTTP_HOST/luci-app-filetransfer/luci-lib-fs_1.0-14_all.ipk"
 	opkg install *.ipk --force-depends
 }
 do_install_depends_ipk() {
-	wget -O "/tmp/luci-lua-runtime_all.ipk" "https://mt3000.netlify.app/theme/luci-lua-runtime_all.ipk"
-	wget -O "/tmp/libopenssl3.ipk" "https://mt3000.netlify.app/theme/libopenssl3.ipk"
+	wget -O "/tmp/luci-lua-runtime_all.ipk" "$HTTP_HOST/theme/luci-lua-runtime_all.ipk"
+	wget -O "/tmp/libopenssl3.ipk" "$HTTP_HOST/theme/libopenssl3.ipk"
 	opkg install "/tmp/luci-lua-runtime_all.ipk"
 	opkg install "/tmp/libopenssl3.ipk"
 }
@@ -226,9 +226,9 @@ do_install_argon_skin() {
 	# 所以这里安装上一个版本2.2.9,考虑到主题皮肤并不需要长期更新，因此固定版本没问题
 	opkg update
 	opkg install luci-lib-ipkg
-	wget -O "/tmp/luci-theme-argon.ipk" "https://mt3000.netlify.app/theme/luci-theme-argon-master_2.2.9.4_all.ipk"
-	wget -O "/tmp/luci-app-argon-config.ipk" "https://mt3000.netlify.app/theme/luci-app-argon-config_0.9_all.ipk"
-	wget -O "/tmp/luci-i18n-argon-config-zh-cn.ipk" "https://mt3000.netlify.app/theme/luci-i18n-argon-config-zh-cn.ipk"
+	wget -O "/tmp/luci-theme-argon.ipk" "$HTTP_HOST/theme/luci-theme-argon-master_2.2.9.4_all.ipk"
+	wget -O "/tmp/luci-app-argon-config.ipk" "$HTTP_HOST/theme/luci-app-argon-config_0.9_all.ipk"
+	wget -O "/tmp/luci-i18n-argon-config-zh-cn.ipk" "$HTTP_HOST/theme/luci-i18n-argon-config-zh-cn.ipk"
 	cd /tmp/
 	opkg install luci-theme-argon.ipk luci-app-argon-config.ipk luci-i18n-argon-config-zh-cn.ipk
 	# 检查上一个命令的返回值
@@ -262,7 +262,7 @@ recovery() {
 }
 
 add_arch_64bit() {
-	if ! wget -O /etc/opkg/arch.conf https://mt3000.netlify.app/64bit/arch.conf; then
+	if ! wget -O /etc/opkg/arch.conf $HTTP_HOST/64bit/arch.conf; then
 		echo "下载 arch.conf 失败，脚本终止。"
 		exit 1
 	fi

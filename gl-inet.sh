@@ -8,10 +8,11 @@ light_magenta() { echo -e "\033[95m\033[01m$1\033[0m"; }
 light_yellow() { echo -e "\033[93m\033[01m$1\033[0m"; }
 cyan() { echo -e "\033[38;2;0;255;255m$1\033[0m"; }
 third_party_source="https://istore.linkease.com/repo/all/nas_luci"
-
+HTTP_HOST="https://mt3000.netlify.app"
 # 设置全局命令 g
 cp -f "$0" /usr/bin/g
 chmod +x /usr/bin/g
+
 
 setup_base_init() {
 
@@ -282,12 +283,12 @@ recovery_opkg_settings() {
 	case "$router_name" in
 	*3000*)
 		echo "Router name contains '3000'."
-		mt3000_opkg="https://mt3000.netlify.app/mt-3000/distfeeds.conf"
+		mt3000_opkg="$HTTP_HOST/mt-3000/distfeeds.conf"
 		wget -O /etc/opkg/distfeeds.conf ${mt3000_opkg}
 		;;
 	*2500*)
 		echo "Router name contains '2500'."
-		mt2500a_opkg="https://mt3000.netlify.app/mt-2500a/distfeeds.conf"
+		mt2500a_opkg="$HTTP_HOST/mt-2500a/distfeeds.conf"
 		wget -O /etc/opkg/distfeeds.conf ${mt2500a_opkg}
 		;;
 	*6000*)
@@ -304,14 +305,14 @@ update_opkg_config() {
 	echo "MT-6000 kernel version: $kernel_version"
 	case $kernel_version in
 	5.4*)
-		mt6000_opkg="https://mt3000.netlify.app/mt-6000/distfeeds-5.4.conf"
+		mt6000_opkg="$HTTP_HOST/mt-6000/distfeeds-5.4.conf"
 		wget -O /etc/opkg/distfeeds.conf ${mt6000_opkg}
 		# 更换5.4.238 内核之后 缺少的依赖
 
 		mkdir -p /tmp/mt6000
-		wget -O /tmp/mt6000/script-utils.ipk "https://mt3000.netlify.app/mt-6000/script-utils.ipk"
-		wget -O /tmp/mt6000/mdadm.ipk "https://mt3000.netlify.app/mt-6000/mdadm.ipk"
-		wget -O /tmp/mt6000/lsblk.ipk "https://mt3000.netlify.app/mt-6000/lsblk.ipk"
+		wget -O /tmp/mt6000/script-utils.ipk "$HTTP_HOST/mt-6000/script-utils.ipk"
+		wget -O /tmp/mt6000/mdadm.ipk "$HTTP_HOST/mt-6000/mdadm.ipk"
+		wget -O /tmp/mt6000/lsblk.ipk "$HTTP_HOST/mt-6000/lsblk.ipk"
 		opkg update
 		if [ -f "/tmp/mt6000/lsblk.ipk" ]; then
 			# 先卸载之前安装过的lsblk,确保使用的是正确的lsblk
@@ -320,7 +321,7 @@ update_opkg_config() {
 		opkg install /tmp/mt6000/*.ipk
 		;;
 	5.15*)
-		mt6000_opkg="https://mt3000.netlify.app/mt-6000/distfeeds.conf"
+		mt6000_opkg="$HTTP_HOST/mt-6000/distfeeds.conf"
 		wget -O /etc/opkg/distfeeds.conf ${mt6000_opkg}
 		;;
 	*)
@@ -360,14 +361,14 @@ update_luci_app_quickstart() {
 do_install_filetransfer() {
 	mkdir -p /tmp/luci-app-filetransfer/
 	cd /tmp/luci-app-filetransfer/
-	wget -O luci-app-filetransfer_all.ipk "https://mt3000.netlify.app/luci-app-filetransfer/luci-app-filetransfer_all.ipk"
-	wget -O luci-lib-fs_1.0-14_all.ipk "https://mt3000.netlify.app/luci-app-filetransfer/luci-lib-fs_1.0-14_all.ipk"
+	wget -O luci-app-filetransfer_all.ipk "$HTTP_HOST/luci-app-filetransfer/luci-app-filetransfer_all.ipk"
+	wget -O luci-lib-fs_1.0-14_all.ipk "$HTTP_HOST/luci-app-filetransfer/luci-lib-fs_1.0-14_all.ipk"
 	opkg install *.ipk --force-depends
 }
 do_install_depends_ipk() {
-	wget -O "/tmp/luci-lua-runtime_all.ipk" "https://mt3000.netlify.app/theme/luci-lua-runtime_all.ipk"
-	wget -O "/tmp/libopenssl3.ipk" "https://mt3000.netlify.app/theme/libopenssl3.ipk"
-	wget -O "/tmp/luci-compat.ipk" "https://mt3000.netlify.app/theme/luci-compat.ipk"
+	wget -O "/tmp/luci-lua-runtime_all.ipk" "$HTTP_HOST/theme/luci-lua-runtime_all.ipk"
+	wget -O "/tmp/libopenssl3.ipk" "$HTTP_HOST/theme/libopenssl3.ipk"
+	wget -O "/tmp/luci-compat.ipk" "$HTTP_HOST/theme/luci-compat.ipk"
 	opkg install "/tmp/luci-lua-runtime_all.ipk"
 	opkg install "/tmp/libopenssl3.ipk"
 	opkg install "/tmp/luci-compat.ipk"
@@ -381,9 +382,9 @@ do_install_argon_skin() {
 	# 所以这里安装上一个版本2.2.9,考虑到主题皮肤并不需要长期更新，因此固定版本没问题
 	opkg update
 	opkg install luci-lib-ipkg
-	wget -O "/tmp/luci-theme-argon.ipk" "https://mt3000.netlify.app/theme/luci-theme-argon-master_2.2.9.4_all.ipk"
-	wget -O "/tmp/luci-app-argon-config.ipk" "https://mt3000.netlify.app/theme/luci-app-argon-config_0.9_all.ipk"
-	wget -O "/tmp/luci-i18n-argon-config-zh-cn.ipk" "https://mt3000.netlify.app/theme/luci-i18n-argon-config-zh-cn.ipk"
+	wget -O "/tmp/luci-theme-argon.ipk" "$HTTP_HOST/theme/luci-theme-argon-master_2.2.9.4_all.ipk"
+	wget -O "/tmp/luci-app-argon-config.ipk" "$HTTP_HOST/theme/luci-app-argon-config_0.9_all.ipk"
+	wget -O "/tmp/luci-i18n-argon-config-zh-cn.ipk" "$HTTP_HOST/theme/luci-i18n-argon-config-zh-cn.ipk"
 	cd /tmp/
 	opkg install luci-theme-argon.ipk luci-app-argon-config.ipk luci-i18n-argon-config-zh-cn.ipk
 	# 检查上一个命令的返回值
@@ -409,7 +410,7 @@ do_install_filemanager() {
 }
 #更新脚本
 update_myself() {
-	wget -O gl-inet.sh "https://mt3000.netlify.app/gl-inet.sh" && chmod +x gl-inet.sh
+	wget -O gl-inet.sh "$HTTP_HOST/gl-inet.sh" && chmod +x gl-inet.sh
 	echo "脚本已更新并保存在当前目录 gl-inet.sh,现在将执行新脚本。"
 	./gl-inet.sh
 	exit 0
@@ -475,7 +476,7 @@ do_install_docker_compose() {
 
 #mt3000更换分区
 mt3000_overlay_changed() {
-	wget -O mt3000.sh "https://mt3000.netlify.app/mt-3000/mt3000.sh" && chmod +x mt3000.sh
+	wget -O mt3000.sh "$HTTP_HOST/mt-3000/mt3000.sh" && chmod +x mt3000.sh
 	sh mt3000.sh
 }
 
@@ -620,7 +621,7 @@ while true; do
 		red "确定要继续吗(y|n)"
 		read -r answer
 		if [ "$answer" = "y" ] || [ -z "$answer" ]; then
-			wget -q -O do_docker.sh "https://mt3000.netlify.app/docker/do_docker.sh" && chmod +x do_docker.sh
+			wget -q -O do_docker.sh "$HTTP_HOST/docker/do_docker.sh" && chmod +x do_docker.sh
 			./do_docker.sh
 		else
 			yellow "已退出Docker安装流程"
