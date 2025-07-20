@@ -337,6 +337,46 @@ toggle_adguardhome() {
 	fi
 }
 
+# 安装[官方辅助UI]插件 by 论坛 iBelieve
+do_install_ui_helper() {
+
+  echo "⚠️ 请您确保当前固件版本大于 4.7.2，若低于此版本建议先升级。"
+  read -p "👉 如果您已确认，请按 [回车] 继续；否则按 Ctrl+C 或输入任意内容后回车退出：" user_input
+
+  if [ -n "$user_input" ]; then
+    echo "🚫 用户取消安装。"
+    return 1
+  fi
+
+  local ipk_file="/tmp/glinjector_3.0.5-6_all.ipk"
+  local sha_file="${ipk_file}.sha256"
+
+  echo "📥 正在下载 IPK 及 SHA256 校验文件..."
+  wget -O "$sha_file" "$HTTP_HOST/ui/glinjector_3.0.5-6_all.ipk.sha256" || {
+    echo "❌ 下载 SHA256 文件失败"
+    return 1
+  }
+
+  wget -O "$ipk_file" "$HTTP_HOST/ui/glinjector_3.0.5-6_all.ipk" || {
+    echo "❌ 下载 IPK 文件失败"
+    return 1
+  }
+
+  echo "🔐 正在进行 SHA256 校验..."
+
+  cd "$(dirname "$ipk_file")"
+  sha256sum -c "$sha_file" || {
+    echo "❌ 校验失败：文件已损坏或未完整下载"
+    rm -f "$ipk_file"
+    return 1
+  }
+
+  echo "✅ 校验通过，开始安装..."
+
+  opkg update
+  opkg install "$ipk_file"
+}
+
 while true; do
 	clear
 	gl_name=$(get_router_name)
@@ -362,6 +402,8 @@ while true; do
 	light_magenta " 7. 自定义风扇启动温度"
 	echo
 	light_magenta " 8. 启用或关闭AdGuardHome广告拦截"
+	echo
+	light_magenta " 9. 安装官方UI辅助插件(by VMatrices)"
 	echo
 	echo " Q. 退出本程序"
 	echo
@@ -402,6 +444,9 @@ while true; do
 		;;
 	8)
 		toggle_adguardhome
+		;;
+	8)
+		do_install_ui_helper
 		;;
 	q | Q)
 		echo "退出"
