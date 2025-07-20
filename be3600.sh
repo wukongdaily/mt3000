@@ -445,7 +445,7 @@ while true; do
 	8)
 		toggle_adguardhome
 		;;
-	8)
+	9)
 		do_install_ui_helper
 		;;
 	q | Q)
