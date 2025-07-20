@@ -9,7 +9,14 @@
 ## 🚀 快速上手
 
 ### 1. SSH连接到路由器,或者在路由器终端执行如下命令
+#### mt3000/2500/6000
 ```bash
 sh -c "$(curl -fsSL https://mt3000.netlify.app/gl-inet.sh)"
+
+```
+
+#### be3600
+```bash
+sh -c "$(curl -fsSL https://mt3000.netlify.app/be3600.sh)"
 
 ```
