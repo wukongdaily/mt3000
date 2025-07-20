@@ -550,15 +550,12 @@ do_install_ui_helper() {
 
   echo "🔐 正在进行 SHA256 校验..."
 
-  # 读取原始 hash 值
-  expected_hash=$(cat "$sha_file" | tr -d '[:space:]')
-  actual_hash=$(sha256sum "$ipk_file" | awk '{print $1}')
-
-  if [ "$expected_hash" != "$actual_hash" ]; then
+  cd "$(dirname "$ipk_file")"
+  sha256sum -c "$sha_file" || {
     echo "❌ 校验失败：文件已损坏或未完整下载"
     rm -f "$ipk_file"
     return 1
-  fi
+  }
 
   echo "✅ 校验通过，开始安装..."
 
