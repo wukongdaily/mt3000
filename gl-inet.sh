@@ -523,6 +523,49 @@ toggle_adguardhome() {
 	fi
 }
 
+# 安装[官方辅助UI]插件 by 论坛 iBelieve
+do_install_ui_helper() {
+
+  echo "⚠️ 请您确保当前固件版本大于 4.7.0，若低于此版本建议先升级。"
+  read -p "👉 如果您已确认，请按 [回车] 继续；否则按 Ctrl+C 或输入任意内容后回车退出：" user_input
+
+  if [ -n "$user_input" ]; then
+    echo "🚫 用户取消安装。"
+    return 1
+  fi
+
+  local ipk_file="/tmp/glinjector_3.0.5-6_all.ipk"
+  local sha_file="${ipk_file}.sha256"
+
+  echo "📥 正在下载 IPK 及 SHA256 校验文件..."
+  wget -O "$sha_file" "$HTTP_HOST/ui/glinjector_3.0.5-6_all.ipk.sha256" || {
+    echo "❌ 下载 SHA256 文件失败"
+    return 1
+  }
+
+  wget -O "$ipk_file" "$HTTP_HOST/ui/glinjector_3.0.5-6_all.ipk" || {
+    echo "❌ 下载 IPK 文件失败"
+    return 1
+  }
+
+  echo "🔐 正在进行 SHA256 校验..."
+
+  # 读取原始 hash 值
+  expected_hash=$(cat "$sha_file" | tr -d '[:space:]')
+  actual_hash=$(sha256sum "$ipk_file" | awk '{print $1}')
+
+  if [ "$expected_hash" != "$actual_hash" ]; then
+    echo "❌ 校验失败：文件已损坏或未完整下载"
+    rm -f "$ipk_file"
+    return 1
+  fi
+
+  echo "✅ 校验通过，开始安装..."
+
+  opkg update
+  opkg install "$ipk_file"
+}
+
 while true; do
 	clear
 	gl_name=$(get_router_name)
@@ -558,6 +601,7 @@ while true; do
 	light_magenta "13. 更新脚本"
 	cyan "14. MT3000一键更换分区"
 	light_magenta "15. 隐藏首页格式化按钮"
+	light_magenta "16. 安装官方UI辅助插件(by VMatrices)"
 	echo
 	echo " Q. 退出本程序"
 	echo
@@ -638,6 +682,9 @@ while true; do
 		;;
 	15)
 		hide_homepage_format_button
+		;;
+	16)
+		do_install_ui_helper
 		;;
 	q | Q)
 		echo "退出"
