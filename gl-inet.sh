@@ -598,7 +598,7 @@ while true; do
 	light_magenta "13. 更新脚本"
 	cyan "14. MT3000一键更换分区"
 	light_magenta "15. 隐藏首页格式化按钮"
-	light_magenta "16. 安装官方UI辅助插件(by VMatrices)"
+	light_magenta "16. 安装个性化UI辅助插件(by VMatrices)"
 	echo
 	echo " Q. 退出本程序"
 	echo

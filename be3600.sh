@@ -403,7 +403,7 @@ while true; do
 	echo
 	light_magenta " 8. 启用或关闭AdGuardHome广告拦截"
 	echo
-	light_magenta " 9. 安装官方UI辅助插件(by VMatrices)"
+	light_magenta " 9. 安装个性化UI辅助插件(by VMatrices)"
 	echo
 	echo " Q. 退出本程序"
 	echo
