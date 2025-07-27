@@ -310,9 +310,9 @@ update_opkg_config() {
 		# 更换5.4.238 内核之后 缺少的依赖
 
 		mkdir -p /tmp/mt6000
-		wget -O /tmp/mt6000/script-utils.ipk "$HTTP_HOST/mt-6000/script-utils.ipk"
-		wget -O /tmp/mt6000/mdadm.ipk "$HTTP_HOST/mt-6000/mdadm.ipk"
-		wget -O /tmp/mt6000/lsblk.ipk "$HTTP_HOST/mt-6000/lsblk.ipk"
+		wget --user-agent="Mozilla/5.0" -O /tmp/mt6000/script-utils.ipk "$HTTP_HOST/mt-6000/script-utils.ipk"
+		wget --user-agent="Mozilla/5.0" -O /tmp/mt6000/mdadm.ipk "$HTTP_HOST/mt-6000/mdadm.ipk"
+		wget --user-agent="Mozilla/5.0" -O /tmp/mt6000/lsblk.ipk "$HTTP_HOST/mt-6000/lsblk.ipk"
 		opkg update
 		if [ -f "/tmp/mt6000/lsblk.ipk" ]; then
 			# 先卸载之前安装过的lsblk,确保使用的是正确的lsblk
@@ -361,14 +361,14 @@ update_luci_app_quickstart() {
 do_install_filetransfer() {
 	mkdir -p /tmp/luci-app-filetransfer/
 	cd /tmp/luci-app-filetransfer/
-	wget -O luci-app-filetransfer_all.ipk "$HTTP_HOST/luci-app-filetransfer/luci-app-filetransfer_all.ipk"
-	wget -O luci-lib-fs_1.0-14_all.ipk "$HTTP_HOST/luci-app-filetransfer/luci-lib-fs_1.0-14_all.ipk"
+	wget --user-agent="Mozilla/5.0" -O luci-app-filetransfer_all.ipk "$HTTP_HOST/luci-app-filetransfer/luci-app-filetransfer_all.ipk"
+	wget --user-agent="Mozilla/5.0" -O luci-lib-fs_1.0-14_all.ipk "$HTTP_HOST/luci-app-filetransfer/luci-lib-fs_1.0-14_all.ipk"
 	opkg install *.ipk --force-depends
 }
 do_install_depends_ipk() {
-	wget -O "/tmp/luci-lua-runtime_all.ipk" "$HTTP_HOST/theme/luci-lua-runtime_all.ipk"
-	wget -O "/tmp/libopenssl3.ipk" "$HTTP_HOST/theme/libopenssl3.ipk"
-	wget -O "/tmp/luci-compat.ipk" "$HTTP_HOST/theme/luci-compat.ipk"
+	wget --user-agent="Mozilla/5.0" -O "/tmp/luci-lua-runtime_all.ipk" "$HTTP_HOST/theme/luci-lua-runtime_all.ipk"
+	wget --user-agent="Mozilla/5.0" -O "/tmp/libopenssl3.ipk" "$HTTP_HOST/theme/libopenssl3.ipk"
+	wget --user-agent="Mozilla/5.0" -O "/tmp/luci-compat.ipk" "$HTTP_HOST/theme/luci-compat.ipk"
 	opkg install "/tmp/luci-lua-runtime_all.ipk"
 	opkg install "/tmp/libopenssl3.ipk"
 	opkg install "/tmp/luci-compat.ipk"
@@ -382,9 +382,9 @@ do_install_argon_skin() {
 	# 所以这里安装上一个版本2.2.9,考虑到主题皮肤并不需要长期更新，因此固定版本没问题
 	opkg update
 	opkg install luci-lib-ipkg
-	wget -O "/tmp/luci-theme-argon.ipk" "$HTTP_HOST/theme/luci-theme-argon-master_2.2.9.4_all.ipk"
-	wget -O "/tmp/luci-app-argon-config.ipk" "$HTTP_HOST/theme/luci-app-argon-config_0.9_all.ipk"
-	wget -O "/tmp/luci-i18n-argon-config-zh-cn.ipk" "$HTTP_HOST/theme/luci-i18n-argon-config-zh-cn.ipk"
+	wget --user-agent="Mozilla/5.0" -O "/tmp/luci-theme-argon.ipk" "$HTTP_HOST/theme/luci-theme-argon-master_2.2.9.4_all.ipk"
+	wget --user-agent="Mozilla/5.0" -O "/tmp/luci-app-argon-config.ipk" "$HTTP_HOST/theme/luci-app-argon-config_0.9_all.ipk"
+	wget --user-agent="Mozilla/5.0" -O "/tmp/luci-i18n-argon-config-zh-cn.ipk" "$HTTP_HOST/theme/luci-i18n-argon-config-zh-cn.ipk"
 	cd /tmp/
 	opkg install luci-theme-argon.ipk luci-app-argon-config.ipk luci-i18n-argon-config-zh-cn.ipk
 	# 检查上一个命令的返回值
@@ -543,7 +543,7 @@ do_install_ui_helper() {
     return 1
   }
 
-  wget -O "$ipk_file" "$HTTP_HOST/ui/glinjector_3.0.5-6_all.ipk" || {
+  wget --user-agent="Mozilla/5.0" -O "$ipk_file" "$HTTP_HOST/ui/glinjector_3.0.5-6_all.ipk" || {
     echo "❌ 下载 IPK 文件失败"
     return 1
   }
