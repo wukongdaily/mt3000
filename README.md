@@ -15,6 +15,12 @@ sh -c "$(curl -fsSL https://mt3000.netlify.app/gl-inet.sh)"
 
 ```
 
+#### mt3000/2500/6000 op24-4.8.2 以上
+```bash
+sh -c "$(curl -fsSL https://mt3000.netlify.app/gl-inet-op24.sh)"
+
+```
+
 #### be3600
 ```bash
 sh -c "$(curl -fsSL https://mt3000.netlify.app/be3600.sh)"

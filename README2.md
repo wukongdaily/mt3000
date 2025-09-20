@@ -33,10 +33,17 @@
 
 ### 1. SSH连接到路由器,或者在路由器终端执行如下命令
 
+#### mt3000/2500/6000
 ```bash
-wget -O gl-inet.sh https://cafe.cpolar.top/wkdaily/gl-inet-onescript/raw/branch/master/gl-inet.sh && chmod +x gl-inet.sh && ./gl-inet.sh
+sh -c "$(curl -fsSL https://mt3000.netlify.app/gl-inet.sh)"
+
 ```
 
+#### mt3000/2500/6000 op24-4.8.2 以上
+```bash
+sh -c "$(curl -fsSL https://mt3000.netlify.app/gl-inet-op24.sh)"
+
+```
 ### 下次如何调用? 输入快捷键 g 即可
 ```bash
 g
