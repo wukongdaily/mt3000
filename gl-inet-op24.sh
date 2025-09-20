@@ -332,17 +332,8 @@ do_install_depends_ipk() {
 #单独安装argon主题
 do_install_argon_skin() {
 	echo "正在尝试安装argon主题......."
-	#下载和安装argon的依赖
-	do_install_depends_ipk
-	# bug fix 由于2.3.1 最新版的luci-argon-theme 登录按钮没有中文匹配,而2.3版本字体不对。
-	# 所以这里安装上一个版本2.2.9,考虑到主题皮肤并不需要长期更新，因此固定版本没问题
-	opkg update
-	opkg install luci-lib-ipkg
-	wget --user-agent="Mozilla/5.0" -O "/tmp/luci-theme-argon.ipk" "$HTTP_HOST/theme/luci-theme-argon-master_2.2.9.4_all.ipk"
-	wget --user-agent="Mozilla/5.0" -O "/tmp/luci-app-argon-config.ipk" "$HTTP_HOST/theme/luci-app-argon-config_0.9_all.ipk"
-	wget --user-agent="Mozilla/5.0" -O "/tmp/luci-i18n-argon-config-zh-cn.ipk" "$HTTP_HOST/theme/luci-i18n-argon-config-zh-cn.ipk"
-	cd /tmp/
-	opkg install luci-theme-argon.ipk luci-app-argon-config.ipk luci-i18n-argon-config-zh-cn.ipk
+	wget "$HTTP_HOST/theme/argon-2.4.3.run" -O /tmp/argon.run
+	sh /tmp/argon.run
 	# 检查上一个命令的返回值
 	if [ $? -eq 0 ]; then
 		echo "argon主题 安装成功"
