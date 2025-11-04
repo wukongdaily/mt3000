@@ -389,24 +389,24 @@ while true; do
 	echo "**********************************************************************"
 	echo "*******支持的机型列表***************************************************"
 	green "*******GL-iNet BE-3600********"
+	green "请确保您的固件版本在4.7.2以上"
 	echo
-	light_magenta " 1. $result (32位)"
+
+	light_magenta " 1. $result (64位)"
 	echo
-	light_magenta " 2. 重置路由器"
+	light_magenta " 2. 安装argon紫色主题"
 	echo
-	light_magenta " 3. $result (64位)"
+	light_magenta " 3. 单独安装iStore商店"
 	echo
-	light_magenta " 4. 安装argon紫色主题"
+	light_magenta " 4. 隐藏首页格式化按钮"
 	echo
-	light_magenta " 5. 单独安装iStore商店"
+	light_magenta " 5. 自定义风扇启动温度"
 	echo
-	light_magenta " 6. 隐藏首页格式化按钮"
+	light_magenta " 6. 启用或关闭AdGuardHome广告拦截"
 	echo
-	light_magenta " 7. 自定义风扇启动温度"
+	light_magenta " 7. 安装个性化UI辅助插件(by VMatrices)"
 	echo
-	light_magenta " 8. 启用或关闭AdGuardHome广告拦截"
-	echo
-	light_magenta " 9. 安装个性化UI辅助插件(by VMatrices)"
+	light_magenta " 8. 恢复出厂设置"
 	echo
 	echo " Q. 退出本程序"
 	echo
@@ -419,37 +419,31 @@ while true; do
 		install_istore_os_style
 		#基础必备设置
 		setup_base_init
-		;;
-	2)
-		recovery
-		;;
-	3)
-		#安装iStore风格
-		install_istore_os_style
-		#基础必备设置
-		setup_base_init
 		#安装iStore商店
 		do_istore
 		#安装首页和网络向导
 		do_quickstart
 		;;
-	4)
+	2)
 		do_install_argon_skin
 		;;
-	5)
+	3)
 		do_istore
 		;;
-	6)
+	4)
 		hide_homepage_format_button
 		;;
-	7)
+	5)
 		set_glfan_temp
 		;;
-	8)
+	6)
 		toggle_adguardhome
 		;;
-	9)
+	7)
 		do_install_ui_helper
+		;;
+	8)
+		recovery
 		;;
 	q | Q)
 		echo "退出"
