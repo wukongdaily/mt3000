@@ -535,12 +535,8 @@ while true; do
 	echo " 4. 安装luci-app-wireguard"
 	echo " 5. 安装Argon紫色主题"
 	echo "6. 安装文件管理器"
-	light_magenta "7. 安装Docker"
-	light_magenta "8. 安装docker-compose"
-	light_magenta "9. 更新脚本"
-	cyan "10. MT3000一键更换分区"
-	light_magenta "11. 隐藏首页格式化按钮"
-	light_magenta "12. 安装个性化UI辅助插件(by VMatrices)"
+	light_magenta "7. 隐藏首页格式化按钮"
+	light_magenta "8. 安装个性化UI辅助插件(by VMatrices)"
 	echo
 	echo " Q. 退出本程序"
 	echo
@@ -586,29 +582,9 @@ while true; do
 		do_install_filemanager
 		;;
 	7)
-		yellow "注意!插入U盘之前请确认U盘数据已备份"
-		red "确定要继续吗(y|n)"
-		read -r answer
-		if [ "$answer" = "y" ] || [ -z "$answer" ]; then
-			wget -q -O do_docker.sh "$HTTP_HOST/docker/do_docker.sh" && chmod +x do_docker.sh
-			./do_docker.sh
-		else
-			yellow "已退出Docker安装流程"
-		fi
-		;;
-	8)
-		do_install_docker_compose
-		;;
-	9)
-		update_myself
-		;;
-	10)
-		mt3000_overlay_changed
-		;;
-	11)
 		hide_homepage_format_button
 		;;
-	12)
+	8)
 		do_install_ui_helper
 		;;
 	q | Q)
