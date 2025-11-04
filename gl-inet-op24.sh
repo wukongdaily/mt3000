@@ -303,6 +303,9 @@ update_luci_app_quickstart() {
 		opkg install iptables-mod-socket
 		opkg install iptables-mod-iprange
 		hide_homepage_format_button
+		green "正在更新到最新版iStoreOS首页风格 "
+		wget $HTTP_HOST/install_new_quickstart.sh -O /tmp/install_new_quickstart.sh && chmod +x /tmp/install_new_quickstart.sh
+		sh /tmp/install_new_quickstart.sh
 		yellow "恭喜您!现在你的路由器已经变成iStoreOS风格啦!"
 		green "现在您可以访问8080端口 查看是否生效 http://192.168.8.1:8080"
 		green "更多up主项目和动态 请务必收藏我的导航站 https://tvhelper.cpolar.cn "
@@ -513,7 +516,7 @@ do_install_ui_helper() {
 while true; do
 	clear
 	gl_name=$(get_router_name)
-	result=$gl_name"一键iStoreOS风格化"
+	result=$gl_name"一键iStoreOS风格化(新版)"
 	result=$(echo "$result" | sed 's/ like iStoreOS//')
 	echo "***********************************************************************"
 	echo "*      一键安装工具箱(for gl-inet Router)"
@@ -530,13 +533,10 @@ while true; do
 	light_magenta " 1. $result"
 	echo
 	echo " 2. 设置风扇开始工作的温度(仅限MT3000)"
-	echo
-	echo " 3. 启用/关闭原厂adguardhome"
-	echo " 4. 安装luci-app-wireguard"
-	echo " 5. 安装Argon紫色主题"
-	echo "6. 安装文件管理器"
-	light_magenta "7. 隐藏首页格式化按钮"
-	light_magenta "8. 安装个性化UI辅助插件(by VMatrices)"
+	echo " 3. 安装Argon紫色主题"
+	echo "4. 安装文件管理器"
+	light_magenta "5. 隐藏首页格式化按钮"
+	light_magenta "6. 安装个性化UI辅助插件(by VMatrices)"
 	echo
 	echo " Q. 退出本程序"
 	echo
@@ -570,21 +570,15 @@ while true; do
 		esac
 		;;
 	3)
-		toggle_adguardhome
-		;;
-	4)
-		do_luci_app_wireguard
-		;;
-	5)
 		do_install_argon_skin
 		;;
-	6)
+	4)
 		do_install_filemanager
 		;;
-	7)
+	5)
 		hide_homepage_format_button
 		;;
-	8)
+	6)
 		do_install_ui_helper
 		;;
 	q | Q)

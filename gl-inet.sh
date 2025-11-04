@@ -347,6 +347,9 @@ update_luci_app_quickstart() {
 		opkg install iptables-mod-socket
 		opkg install iptables-mod-iprange
 		hide_homepage_format_button
+		green "正在更新到最新版iStoreOS首页风格 "
+		wget $HTTP_HOST/install_new_quickstart.sh -O /tmp/install_new_quickstart.sh && chmod +x /tmp/install_new_quickstart.sh
+		sh /tmp/install_new_quickstart.sh
 		yellow "恭喜您!现在你的路由器已经变成iStoreOS风格啦!"
 		green "现在您可以访问8080端口 查看是否生效 http://192.168.8.1:8080"
 		green "更多up主项目和动态 请务必收藏我的导航站 https://tvhelper.cpolar.cn "
@@ -566,7 +569,7 @@ do_install_ui_helper() {
 while true; do
 	clear
 	gl_name=$(get_router_name)
-	result=$gl_name"一键iStoreOS风格化"
+	result=$gl_name"一键iStoreOS风格化(新版)"
 	result=$(echo "$result" | sed 's/ like iStoreOS//')
 	echo "***********************************************************************"
 	echo "*      一键安装工具箱(for gl-inet Router)"
