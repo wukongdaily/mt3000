@@ -81,7 +81,7 @@ do_quickstart() {
 	wget $HTTP_HOST/install_new_quickstart.sh -O /tmp/install_new_quickstart.sh && chmod +x /tmp/install_new_quickstart.sh
 	sh /tmp/install_new_quickstart.sh
 	green "首页风格安装完毕！请使用8080端口访问luci界面：http://192.168.8.1:8080"
-	green "作者更多动态务必收藏：https://tvhelper.cpolar.top/"
+	green "作者更多动态务必收藏：https://tvhelper.cpolar.cn/"
 }
 
 download_luci_quickstart() {
