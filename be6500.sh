@@ -76,7 +76,7 @@ do_quickstart() {
 	download_lib_quickstart
 	download_luci_quickstart
 	opkg install /tmp/ipk_downloads/*.ipk
-	hide_homepage_format_button
+	hide_ui_elements
 	green "正在更新到最新版iStoreOS首页风格 "
 	wget $HTTP_HOST/install_new_quickstart.sh -O /tmp/install_new_quickstart.sh && chmod +x /tmp/install_new_quickstart.sh
 	sh /tmp/install_new_quickstart.sh
@@ -272,26 +272,50 @@ add_arch_64bit() {
 }
 
 # 防止误操作 隐藏首页的格式化按钮
-hide_homepage_format_button() {
+hide_ui_elements() {
 
-	TARGET="/www/luci-static/quickstart/style.css"
-	MARKER="/* hide quickstart disk button */"
+    TARGET="/www/luci-static/quickstart/style.css"
+    MARKER="/* hide custom luci elements */"
 
-	# 如果没有追加过，就添加
-	if ! grep -q "$MARKER" "$TARGET"; then
-		cat <<EOF >>"$TARGET"
+    # 如果没有追加过，就添加
+    if ! grep -q "$MARKER" "$TARGET"; then
+        cat <<EOF >>"$TARGET"
 
 $MARKER
+/* 隐藏首页格式化按钮 */
 .value-data button {
   display: none !important;
 }
-EOF
-		echo "✅ 格式化按钮已隐藏"
-	else
-		echo "⚠️ 无需重复操作"
-	fi
 
+/* 隐藏网络页的第 3 个 item */
+#main > div > div.network-container.align-c > div > div > div:nth-child(3) {
+  display: none !important;
 }
+
+/* 隐藏网络页的第 5 个 item */
+#main > div > div.network-container.align-c > div > div > div:nth-child(5) {
+  display: none !important;
+}
+
+/* 隐藏网络页的第 6 个 item */
+#main > div > div.network-container.align-c > div > div > div:nth-child(6) {
+  display: none !important;
+}
+
+/* 隐藏 feature-card.pink */
+#main > div > div.card-container > div.feature-card.pink {
+  display: none !important;
+}
+
+EOF
+        echo "✅ 自定义元素已隐藏"
+    else
+        echo "⚠️ 无需重复操作"
+    fi
+}
+
+
+
 
 #自定义风扇开始工作的温度
 set_glfan_temp() {
@@ -379,6 +403,12 @@ do_install_ui_helper() {
   opkg update
   opkg install "$ipk_file"
 }
+#高级卸载
+advanced_uninstall(){
+	echo "📥 正在下载 高级卸载插件..."
+	wget -O /tmp/advanced_uninstall.run $HTTP_HOST/luci-app-uninstall-v1.0.6.run && chmod +x /tmp/advanced_uninstall.run
+	sh /tmp/advanced_uninstall.run
+}
 
 while true; do
 	clear
@@ -398,13 +428,15 @@ while true; do
 	echo
 	light_magenta " 3. 单独安装iStore商店"
 	echo
-	light_magenta " 4. 隐藏首页格式化按钮"
+	light_magenta " 4. 隐藏首页无用元素"
 	echo
 	light_magenta " 5. 自定义风扇启动温度"
 	echo
 	light_magenta " 6. 安装个性化UI辅助插件(by VMatrices)"
 	echo
-	light_magenta " 7. 恢复出厂设置"
+	light_magenta " 7. 安装高级卸载"
+	echo
+	light_magenta " 8. 恢复出厂设置"
 	echo
 	echo " Q. 退出本程序"
 	echo
@@ -429,7 +461,7 @@ while true; do
 		do_istore
 		;;
 	4)
-		hide_homepage_format_button
+		hide_ui_elements
 		;;
 	5)
 		set_glfan_temp
@@ -438,6 +470,9 @@ while true; do
 		do_install_ui_helper
 		;;
 	7)
+		advanced_uninstall
+		;;
+	8)
 		recovery
 		;;
 	q | Q)
