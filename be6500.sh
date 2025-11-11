@@ -402,6 +402,16 @@ advanced_uninstall(){
 	sh /tmp/advanced_uninstall.run
 }
 
+# 安装新首页风格
+do_install_new_quickstart(){
+	green "正在更新到最新版iStoreOS首页风格 "
+	wget $HTTP_HOST/install_new_quickstart.sh -O /tmp/install_new_quickstart.sh && chmod +x /tmp/install_new_quickstart.sh
+	sh /tmp/install_new_quickstart.sh
+	hide_ui_elements
+	green "首页风格安装完毕！请使用8080端口访问luci界面：http://192.168.8.1:8080"
+	green "作者更多动态务必收藏：https://tvhelper.cpolar.cn/"
+}
+
 while true; do
 	clear
 	gl_name=$(get_router_name)
@@ -428,7 +438,9 @@ while true; do
 	echo
 	light_magenta " 7. 安装高级卸载"
 	echo
-	light_magenta " 8. 恢复出厂设置"
+	light_magenta " 8. 安装新首页"
+	echo
+	light_magenta " 9. 恢复出厂设置"
 	echo
 	echo " Q. 退出本程序"
 	echo
@@ -465,6 +477,9 @@ while true; do
 		advanced_uninstall
 		;;
 	8)
+		do_install_new_quickstart
+		;;
+	9)
 		recovery
 		;;
 	q | Q)
