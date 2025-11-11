@@ -346,10 +346,10 @@ update_luci_app_quickstart() {
 		opkg install iptables-mod-tproxy
 		opkg install iptables-mod-socket
 		opkg install iptables-mod-iprange
-		hide_homepage_format_button
 		green "正在更新到最新版iStoreOS首页风格 "
 		wget $HTTP_HOST/install_new_quickstart.sh -O /tmp/install_new_quickstart.sh && chmod +x /tmp/install_new_quickstart.sh
 		sh /tmp/install_new_quickstart.sh
+		hide_ui_elements
 		yellow "恭喜您!现在你的路由器已经变成iStoreOS风格啦!"
 		green "现在您可以访问8080端口 查看是否生效 http://192.168.8.1:8080"
 		green "更多up主项目和动态 请务必收藏我的导航站 https://tvhelper.cpolar.cn "
@@ -483,26 +483,42 @@ mt3000_overlay_changed() {
 	sh mt3000.sh
 }
 
-# 防止误操作 隐藏首页的格式化按钮
-hide_homepage_format_button() {
+# 防止误操作 隐藏首页无用的元素
+hide_ui_elements() {
 
-	TARGET="/www/luci-static/quickstart/style.css"
-	MARKER="/* hide quickstart disk button */"
+    TARGET="/www/luci-static/quickstart/style.css"
+    MARKER="/* hide custom luci elements */"
 
-	# 如果没有追加过，就添加
-	if ! grep -q "$MARKER" "$TARGET"; then
-		cat <<EOF >>"$TARGET"
+    # 如果没有追加过，就添加
+    if ! grep -q "$MARKER" "$TARGET"; then
+        cat <<EOF >>"$TARGET"
 
 $MARKER
+/* 隐藏首页格式化按钮 */
 .value-data button {
   display: none !important;
 }
-EOF
-		echo "✅ 格式化按钮已隐藏"
-	else
-		echo "⚠️ 无需重复操作"
-	fi
 
+/* 隐藏网络页的第 3 个 item */
+#main > div > div.network-container.align-c > div > div > div:nth-child(3) {
+  display: none !important;
+}
+
+/* 隐藏网络页的第 5 个 item */
+#main > div > div.network-container.align-c > div > div > div:nth-child(5) {
+  display: none !important;
+}
+
+/* 隐藏 feature-card.pink */
+#main > div > div.card-container > div.feature-card.pink {
+  display: none !important;
+}
+
+EOF
+        echo "✅ 自定义元素已隐藏"
+    else
+        echo "⚠️ 无需重复操作"
+    fi
 }
 
 # 启用adguardhome
@@ -681,7 +697,7 @@ while true; do
 		mt3000_overlay_changed
 		;;
 	15)
-		hide_homepage_format_button
+		hide_ui_elements
 		;;
 	16)
 		do_install_ui_helper
