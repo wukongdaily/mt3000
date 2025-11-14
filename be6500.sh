@@ -59,9 +59,6 @@ do_istore() {
 	# 安装所有下载的 .ipk 包
 	opkg install ./*.ipk
 
-	#添加istore软件源
-	wget -O /etc/opkg/customfeeds.conf $HTTP_HOST/64bit/be6500.conf
-
 	#调整a53架构优先级
 	add_arch_64bit
 
