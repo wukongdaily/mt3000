@@ -85,8 +85,8 @@ do_istore() {
 #设置风扇工作温度
 setup_cpu_fans() {
 	#设定温度阀值,cpu高于48度,则风扇开始工作
-	uci set glfan.@globals[0].temperature=48
-	uci set glfan.@globals[0].warn_temperature=48
+	uci set glfan.@globals[0].temperature=50
+	uci set glfan.@globals[0].warn_temperature=50
 	uci set glfan.@globals[0].integration=4
 	uci set glfan.@globals[0].differential=20
 	uci commit glfan
@@ -529,6 +529,13 @@ do_install_ui_helper() {
   opkg install "$ipk_file"
 }
 
+#高级卸载
+advanced_uninstall(){
+	echo "📥 正在下载 高级卸载插件..."
+	wget -O /tmp/advanced_uninstall.run $HTTP_HOST/luci-app-uninstall.run && chmod +x /tmp/advanced_uninstall.run
+	sh /tmp/advanced_uninstall.run
+}
+
 while true; do
 	clear
 	gl_name=$(get_router_name)
@@ -536,7 +543,7 @@ while true; do
 	result=$(echo "$result" | sed 's/ like iStoreOS//')
 	echo "***********************************************************************"
 	echo "*      一键安装工具箱(for gl-inet Router)"
-	echo "*      备用脚本 by @wukongdaily        "
+	echo "*      20251118 by @wukongdaily        "
 	echo "**********************************************************************"
 	echo "*      当前的路由器型号: "$gl_name | sed 's/ like iStoreOS//'
 	echo
@@ -553,6 +560,7 @@ while true; do
 	echo "4. 安装文件管理器"
 	light_magenta "5. 隐藏首页格式化按钮"
 	light_magenta "6. 安装个性化UI辅助插件(by VMatrices)"
+	light_magenta "7. 安装高级卸载插件"
 	echo
 	echo " Q. 退出本程序"
 	echo
@@ -596,6 +604,9 @@ while true; do
 		;;
 	6)
 		do_install_ui_helper
+		;;
+	7)
+		advanced_uninstall
 		;;
 	q | Q)
 		echo "退出"

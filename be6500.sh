@@ -391,7 +391,7 @@ do_install_ui_helper() {
 #高级卸载
 advanced_uninstall(){
 	echo "📥 正在下载 高级卸载插件..."
-	wget -O /tmp/advanced_uninstall.run $HTTP_HOST/luci-app-uninstall-v1.0.6.run && chmod +x /tmp/advanced_uninstall.run
+	wget -O /tmp/advanced_uninstall.run $HTTP_HOST/luci-app-uninstall.run && chmod +x /tmp/advanced_uninstall.run
 	sh /tmp/advanced_uninstall.run
 }
 
@@ -429,7 +429,7 @@ while true; do
 	echo
 	light_magenta " 6. 安装个性化UI辅助插件(by VMatrices)"
 	echo
-	light_magenta " 7. 安装高级卸载"
+	light_magenta " 7. 安装高级卸载插件"
 	echo
 	light_magenta " 8. 安装新首页"
 	echo

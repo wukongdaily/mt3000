@@ -389,12 +389,19 @@ do_install_ui_helper() {
   opkg install "$ipk_file"
 }
 
+#高级卸载
+advanced_uninstall(){
+	echo "📥 正在下载 高级卸载插件..."
+	wget -O /tmp/advanced_uninstall.run $HTTP_HOST/luci-app-uninstall.run && chmod +x /tmp/advanced_uninstall.run
+	sh /tmp/advanced_uninstall.run
+}
+
 while true; do
 	clear
 	gl_name=$(get_router_name)
 	result="GL-iNet Be3600 一键iStoreOS风格化"
 	echo "***********************************************************************"
-	echo "*      一键安装工具箱(for gl-inet be3600)  by @wukongdaily        "
+	echo "*      一键安装工具箱(for gl-inet be3600)  by @wukongdaily 20251118       "
 	echo "**********************************************************************"
 	echo "*******支持的机型列表***************************************************"
 	green "*******GL-iNet BE-3600********"
@@ -415,7 +422,9 @@ while true; do
 	echo
 	light_magenta " 7. 安装个性化UI辅助插件(by VMatrices)"
 	echo
-	light_magenta " 8. 恢复出厂设置"
+	light_magenta " 8. 安装高级卸载插件"
+	echo
+	light_magenta " 9. 恢复出厂设置/重置路由器"
 	echo
 	echo " Q. 退出本程序"
 	echo
@@ -452,6 +461,9 @@ while true; do
 		do_install_ui_helper
 		;;
 	8)
+		advanced_uninstall
+		;;
+	9)
 		recovery
 		;;
 	q | Q)
