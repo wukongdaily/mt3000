@@ -557,8 +557,8 @@ while true; do
 	echo
 	echo " 2. 设置风扇开始工作的温度(仅限MT3000)"
 	echo " 3. 安装Argon紫色主题"
-	echo "4. 安装文件管理器"
-	light_magenta "5. 隐藏首页格式化按钮"
+	echo " 4. 安装文件管理器"
+	light_magenta "5. 隐藏首页非必要UI元素"
 	light_magenta "6. 安装个性化UI辅助插件(by VMatrices)"
 	light_magenta "7. 安装高级卸载插件"
 	echo

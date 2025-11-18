@@ -623,7 +623,7 @@ while true; do
 	light_magenta "12. 安装docker-compose"
 	light_magenta "13. 更新脚本"
 	cyan "14. MT3000一键更换分区"
-	light_magenta "15. 隐藏首页格式化按钮"
+	light_magenta "15. 隐藏首页非必要UI元素"
 	light_magenta "16. 安装个性化UI辅助插件(by VMatrices)"
 	light_magenta "17. 安装高级卸载插件"
 	echo
