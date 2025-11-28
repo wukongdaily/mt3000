@@ -303,8 +303,16 @@ update_luci_app_quickstart() {
 		opkg install iptables-mod-socket
 		opkg install iptables-mod-iprange
 		green "正在更新到最新版iStoreOS首页风格 "
-		wget $HTTP_HOST/install_new_quickstart.sh -O /tmp/install_new_quickstart.sh && chmod +x /tmp/install_new_quickstart.sh
-		sh /tmp/install_new_quickstart.sh
+		TMPATH=/tmp/qstart
+		mkdir -p ${TMPATH}
+		app_aarch64='quickstart_0.11.7-1_aarch64_cortex-a53.ipk'
+		app_ui='luci-app-quickstart_0.11.7-r1_all.ipk'
+		app_lng='luci-i18n-quickstart-zh-cn_git-25.283.23675-635149e_all.ipk'
+		wget $HTTP_HOST/newquickstart/$app_aarch64 -O ${TMPATH}/$app_aarch64
+		wget $HTTP_HOST/newquickstart/$app_ui -O ${TMPATH}/$app_ui
+		wget $HTTP_HOST/newquickstart/$app_lng -O ${TMPATH}/$app_lng
+		opkg install ${TMPATH}/*.ipk
+		rm -rf ${TMPATH}
 		hide_ui_elements
 		yellow "恭喜您!现在你的路由器已经变成iStoreOS风格啦!"
 		green "现在您可以访问8080端口 查看是否生效 http://192.168.8.1:8080"
